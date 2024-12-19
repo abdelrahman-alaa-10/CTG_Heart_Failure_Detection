@@ -36,23 +36,18 @@ for n in range(dataset_rows_num):
     fhr_vector_of_vectors[n] += uterine_contractions_vector[n] * np.sin(2 * np.pi * (1 / 300) * time)
 
 
-case_num = 5
-# Define a Butterworth Low-Pass Filter
-def butter_lowpass_filter(data, cutoff, fs, order=4):
-    nyquist = 0.5 * fs
-    normal_cutoff = cutoff / nyquist
-    b, a = signal.butter(order, normal_cutoff, btype='low', analog=False)
-    filtered_data = signal.filtfilt(b, a, data)
-    return filtered_data
-
-# Filtering Parameters
+# Design a Butterworth filter
 cutoff_frequency = 0.2  # Cutoff frequency in Hz
 sampling_frequency = sampling_rate  # Sampling frequency in Hz
+nyquist_frequency = 0.5 * sampling_frequency
+normal_cutoff = cutoff_frequency / nyquist_frequency
+order = 2  # Filter order
 
-# Select a Signal to Filter
-selected_signal_index = 1000  # Choose the 1000th sample for demonstration
-original_signal = fhr_vector_of_vectors[selected_signal_index]
-filtered_signal = butter_lowpass_filter(original_signal, cutoff_frequency, sampling_frequency)
+b, a = signal.butter(order, normal_cutoff, btype='low', analog=False)
+
+filtered_fhr_vector_of_vectors = signal.filtfilt(b, a, fhr_vector_of_vectors)
+
+case_num = 5
 
 # Plot Original and Filtered Signals
 plt.figure(figsize=(12, 6))
@@ -60,9 +55,9 @@ plt.plot(time / 60, fhr_vector_of_vectors[case_num], label="Instantaneous fhr_ve
 plt.axhline(baseline_vector[case_num], color="red", linestyle="--", label="Baseline fhr_vector_of_vectors")
 plt.title("Reconstructed Instantaneous Fetal Heart Rate (fhr_vector_of_vectors)")
 
-plt.plot(time / 60, original_signal, label="Original Signal", color="blue", alpha=0.7)
-plt.plot(time / 60, filtered_signal, label="Filtered Signal", color="green", linestyle="--", linewidth=2)
-plt.axhline(baseline_vector[selected_signal_index], color="red", linestyle="--", label="Baseline fhr_vector_of_vectors")
+# plt.plot(time / 60, original_signal, label="Original Signal", color="blue", alpha=0.7)
+# plt.plot(time / 60, filtered_signal, label="Filtered Signal", color="green", linestyle="--", linewidth=2)
+# plt.axhline(baseline_vector[selected_signal_index], color="red", linestyle="--", label="Baseline fhr_vector_of_vectors")
 plt.title("Fetal Heart Rate Signal Before and After Filtering")
 plt.xlabel("Time (minutes)")
 plt.ylabel("Fetal Heart Rate (bpm)")
