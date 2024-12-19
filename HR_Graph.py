@@ -40,11 +40,12 @@ for n in range(dataset_rows_num):
     fhr_vector_of_vectors[n] += uterine_contractions_vector[n] * np.sin(2*np.pi*(1/300)*time)
     
 
+case_num = 5
 
 # Plot the reconstructed fhr_vector_of_vectors
 plt.figure(figsize=(12, 6))
-plt.plot(time / 60, fhr_vector_of_vectors[1000], label="Instantaneous fhr_vector_of_vectors", color="blue")
-plt.axhline(baseline_vector[1000], color="red", linestyle="--", label="Baseline fhr_vector_of_vectors")
+plt.plot(time / 60, fhr_vector_of_vectors[case_num], label="Instantaneous fhr_vector_of_vectors", color="blue")
+plt.axhline(baseline_vector[case_num], color="red", linestyle="--", label="Baseline fhr_vector_of_vectors")
 plt.title("Reconstructed Instantaneous Fetal Heart Rate (fhr_vector_of_vectors)")
 plt.xlabel("Time (minutes)")
 plt.ylabel("Fetal Heart Rate (bpm)")
