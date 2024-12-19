@@ -51,13 +51,10 @@ case_num = 5
 
 # Plot Original and Filtered Signals
 plt.figure(figsize=(12, 6))
-plt.plot(time / 60, fhr_vector_of_vectors[case_num], label="Instantaneous fhr_vector_of_vectors", color="blue")
-plt.axhline(baseline_vector[case_num], color="red", linestyle="--", label="Baseline fhr_vector_of_vectors")
+plt.plot(time / 60, fhr_vector_of_vectors[case_num], label="Heart Rate", color="blue")
+plt.plot(time/60, filtered_fhr_vector_of_vectors[case_num], label="Filtered Heart Rate", color="yellow")
+plt.axhline(baseline_vector[case_num], color="red", linestyle="--", label="Baseline")
 plt.title("Reconstructed Instantaneous Fetal Heart Rate (fhr_vector_of_vectors)")
-
-# plt.plot(time / 60, original_signal, label="Original Signal", color="blue", alpha=0.7)
-# plt.plot(time / 60, filtered_signal, label="Filtered Signal", color="green", linestyle="--", linewidth=2)
-# plt.axhline(baseline_vector[selected_signal_index], color="red", linestyle="--", label="Baseline fhr_vector_of_vectors")
 plt.title("Fetal Heart Rate Signal Before and After Filtering")
 plt.xlabel("Time (minutes)")
 plt.ylabel("Fetal Heart Rate (bpm)")
