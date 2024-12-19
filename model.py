@@ -2,9 +2,9 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, accuracy_score
-
+import joblib
 # Load the dataset
-dataset_path = 'datasets/fetal_health.csv'
+dataset_path = 'fetal_health.csv'
 data = pd.read_csv(dataset_path)
 
 # Display the first few rows of the dataset
@@ -25,6 +25,8 @@ model.fit(X_train, y_train)
 
 # Predict the target for the test set
 y_pred = model.predict(X_test)
+joblib.dump(model, "fetal_health_rf_model.pkl")
+
 
 # Evaluate the model
 print("Accuracy:", accuracy_score(y_test, y_pred))
